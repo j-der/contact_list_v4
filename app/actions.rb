@@ -4,5 +4,5 @@ get '/' do
 end
 
 get '/contacts' do
-  Contact.all
+  Contact.all.to_json
 end

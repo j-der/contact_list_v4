@@ -7,8 +7,8 @@ get '/contacts' do
   Contact.all.to_json
 end
 
-get '/contacts/:id' do
-  contact = Contact.find(params[:id]).to_json
+get '/contacts/search' do
+  Contact.where(firstname: params[:firstname]).to_json
 end
 
 post '/contacts/create' do

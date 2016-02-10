@@ -7,7 +7,7 @@ var Contacts = {
   showContacts: function(data) {
     $("#contactlist").empty();
     $.each(data, function(index, contact) {
-      $('#contactlist').append('<p>Name: ' + contact.firstname + ' ' + contact.lastname + ', email: ' + contact.email);
+      $('#contactlist').append('<p>Name: ' + contact.firstname + ' ' + contact.lastname + ', email: ' + contact.email + '&nbsp;&nbsp;&nbsp;&nbsp; DELETE</p>');
     });
   },
 
@@ -34,9 +34,16 @@ var Contacts = {
     }
   },
 
-  findContact: function(data) {
+  searchContact: function(data) {
     $("#contactlist").empty();
     var searchTerm = $('#searchterm').val();
+    $.get('/contacts/search?firstname=' + searchTerm, function(results){
+      // console.log(result);
+      var parsedResults = JSON.parse(results);
+      $.each(parsedResults, function(index, contact) {
+        $('#contactlist').append('<p>' + contact.firstname + ' ' + contact.lastname + ', ' + contact.email + '</p>');
+      });
+    });
 
   }
 };
@@ -44,5 +51,6 @@ var Contacts = {
 $(function() {
   $("#getContacts").on('click', Contacts.getContacts);
   $("#addContact").on('click', Contacts.addContact);
+  $("#findContact").on('click', Contacts.searchContact);
 
 });

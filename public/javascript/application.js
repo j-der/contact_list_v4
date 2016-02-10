@@ -1,4 +1,3 @@
-
 var Contacts = {
 
   getContacts: function() {
@@ -12,8 +11,35 @@ var Contacts = {
     });
   },
 
-};
+  addContact: function() {
 
+    var firstName = $('#fname').val();
+    var lastName = $('#lname').val();
+    var emailAddress = $('#email').val();
+
+    var newContact = {
+      firstname: firstName,
+      lastname: lastName,
+      email: emailAddress
+    };
+    $.post('contacts/create', newContact, Contacts.addedContact, 'json');
+  },
+
+  addedContact: function(data) {
+    if (data.result) {
+      Contacts.getContacts();
+    }
+    else {
+      alert("Oops, something weird happened. Please try again.")
+    }
+  },
+
+  findContact: function(data) {
+    $("#contactlist").empty();
+    var searchTerm = $('#searchterm').val();
+
+  }
+};
 
 $(function() {
   $("#getContacts").on('click', Contacts.getContacts);
